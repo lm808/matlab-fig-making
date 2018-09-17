@@ -1,0 +1,69 @@
+function []=fFigCapture(handle, destinationFile, varargin)
+
+%% defualts
+dpi = 300;
+text_interpreter = 'Latex';
+tick_fontSz = 10;
+label_fontSz = 11;
+title_fontSz = 11;
+skip_format_adj = false;
+
+%% parse input
+n = length(varargin);
+for i = 1:2:n-1
+    switch varargin{i}
+        case 'dpi'
+            dpi = varargin{i+1};
+        case 'tex_interpreter'
+            text_interpreter = varargin{i+1};
+        case 'tick_fontSz'
+            tick_fontSz = varargin{i+1};
+        case 'label_fontSz'
+            label_fontSz = varargin{i+1};
+        case 'title_fontSz'
+            title_fontSz = varargin{i+1};
+        case 'skip_format_adj'
+            skip_format_adj = varargin{i+1};
+        otherwise
+            error('fFigCapture: Unknown option.')
+    end
+end
+type = destinationFile(end-2:end);
+
+%% set interpreter & font sizes
+if ~skip_format_adj
+    h = findobj(handle,'type','Axes');
+    for i = 1:length(h)
+        fAxFormat(h(i), 'tick_fontSz', tick_fontSz, ...
+                        'label_fontSz', label_fontSz, ...
+                        'title_fontSz', title_fontSz, ...
+                        'text_interpreter', text_interpreter);
+    end
+    h = findobj(handle,'type','Legend');
+    for i = 1:length(h)
+        h(i).Interpreter = text_interpreter;
+    end
+    h = findobj(handle,'type','ColorBar');
+    for i = 1:length(h)
+        h(i).TickLabelInterpreter = text_interpreter;
+    end
+end
+
+%% output figure
+switch type
+    case 'fig'
+        hgsave(handle,destinationFile)
+    case 'pdf'
+        save2pdf(destinationFile,handle,dpi)
+%         print(handle,'-dpdf',destinationFile,sprintf('-r%d',dpi))
+        system(['pdfcrop ',destinationFile,' ',destinationFile])
+    case 'png'
+        set(handle, 'PaperPositionMode', 'auto');
+        print(handle,destinationFile,'-dpng',sprintf('-r%d',dpi))
+        system(['convert ',destinationFile,' -trim ',destinationFile]);
+    case 'try'
+        % trial run only, no output will be created.
+    otherwise
+        disp('Unsupported file format, saving as MATLAB fig file.')
+        hgsave(handle,destinationFile)
+end
