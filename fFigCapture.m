@@ -28,7 +28,8 @@ for i = 1:2:n-1
             error('fFigCapture: Unknown option.')
     end
 end
-type = destinationFile(end-2:end);
+type = strsplit(destinationFile, '.');
+type = type{end};
 
 %% set interpreter & font sizes
 if ~skip_format_adj
@@ -54,10 +55,17 @@ switch type
     case 'fig'
         hgsave(handle,destinationFile)
     case 'pdf'
+%         handle.PaperPositionMode = 'auto';
+%         fig_pos = handle.PaperPosition;
+%         handle.PaperSize = [fig_pos(3) fig_pos(4)];
         save2pdf(destinationFile,handle,dpi)
 %         print(handle,'-dpdf',destinationFile,sprintf('-r%d',dpi))
         system(['pdfcrop ',destinationFile,' ',destinationFile])
     case 'png'
+%         pdfname = [destinationFile(1:end-3),'pdf'];
+%         fFigCapture(handle,pdfname)
+%         system(['convert -quality 100 -density 300 -antialias ',pdfname,' ',destinationFile]);
+%         delete(pdfname);
         set(handle, 'PaperPositionMode', 'auto');
         print(handle,destinationFile,'-dpng',sprintf('-r%d',dpi))
         system(['convert ',destinationFile,' -trim ',destinationFile]);
@@ -65,5 +73,5 @@ switch type
         % trial run only, no output will be created.
     otherwise
         disp('Unsupported file format, saving as MATLAB fig file.')
-        hgsave(handle,destinationFile)
+        fFigCapture(handle,[destinationFile,'.fig'])
 end
