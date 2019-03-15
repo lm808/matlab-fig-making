@@ -1,5 +1,26 @@
 function [clr] = fClr(i,~)
 
+% [clr] = fClr(i)
+% -------------------------------------------------------------------------
+% Defines a set of colour scheme for plotting and returns their RGB.
+% - There are a total of 20 colours. They come in pairs. e.g. #1 and #11 
+%   define a blue and a ligher blue, #2 and #12 define a red and a ligher 
+%   red. 
+% - These are handy e.g. when fitted lines are plotted over scattered data,
+%   with multiple data sets on the same plot.
+% - Input: i - colour code or colour name. Include a second input (anything
+%   will do) to see all the colours and their code/name.
+% - Output: clr - the RGB code for the colour.
+% - Example: 
+%            plot(x, y, 'o','color', fClr(2), 'markeredgecolor',...
+%                 fClr('red'), 'markerfacecolor', fClr('r')).
+%   All three invokations of fClr in the example above the function will
+%   return a red colour.
+% - Use fClr(1,1) to see a figure with all the colours. The y axis of this
+%   figure will give you the valid names of these colour. 
+% -------------------------------------------------------------------------
+% lm808, 03/2019
+
 if ischar(i)
     i = lower(i);
 end

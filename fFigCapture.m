@@ -4,15 +4,14 @@ function []=fFigCapture(handle, destinationFile, varargin)
 % -------------------------------------------------------------------------
 % Exports MATLAB figures 'as is', with formatting options for texts.
 % - Choose file format by ending the file name with the desired extension:
-%   'pdf' - PDF vector image, recommended for pdflatex (vector)
+%   'pdf' - PDF vector image, recommended for pdflatex
 %   'png' - PNG bitmap image
 %   'fig' - editable MATLAB figure file
 %   'try' - run through all formatting options without exporting a file
 % - Extra options: 'dpi', 'tex_interpreter', 'tick_fontsz', 'label_fontsz', 
 %                  'title_fontsz', 'skip_format_adj'
 % -------------------------------------------------------------------------
-% lm808@ic.ac.uk
-% March 2019
+% lm808, 03/2019
 
 %% defualts
 dpi = 300;
