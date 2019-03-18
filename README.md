@@ -1,7 +1,9 @@
 # matlab-fig-making
 MATLAB toolbox to prepare figures for documents and publications.
 
-Released under GNU General Public License version 3.
+Released under MIT License
+
+Copyright (c) 2019 lm808
 
 (c) lm808, 03/2019
 
