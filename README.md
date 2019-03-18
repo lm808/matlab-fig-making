@@ -5,8 +5,6 @@ Released under MIT License
 
 Copyright (c) 2019 lm808
 
-(c) lm808, 03/2019
-
 ## Usage
 
 1. Install dependencies for your system (optional, see below).
