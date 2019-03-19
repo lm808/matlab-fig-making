@@ -1,6 +1,6 @@
 function []=fFigCapture(handle, destinationFile, varargin)
 
-% [] = fFigCapture(handle, destinationFile, varargin)
+% [] = fFigCapture(handle, destinationFile, ...)
 % -------------------------------------------------------------------------
 % Exports MATLAB figures 'as is', with formatting options for texts.
 % - Choose file format by ending the file name with the desired extension:
@@ -8,8 +8,13 @@ function []=fFigCapture(handle, destinationFile, varargin)
 %   'png' - PNG bitmap image
 %   'fig' - editable MATLAB figure file
 %   'try' - run through all formatting options without exporting a file
-% - Extra options: 'dpi', 'tex_interpreter', 'tick_fontsz', 'label_fontsz', 
-%                  'title_fontsz', 'skip_format_adj'
+% - '...': extra option-value pairs ('option', default) :
+%   ('dpi', 300) - dots per inch of the output image
+%   ('tex_interpreter', 'Latex') - text interpreter for the figure
+%   ('tick_fontsz', 10) - font size of numbers on the axis
+%   ('label_fontsz', 11) - font size of the axis labels (i.e. xlabel, etc)
+%   ('title_fontsz', 11) - font size of the figure title
+%   ('skip_format_adj', false) - skip interpreter or font changes
 % -------------------------------------------------------------------------
 % lm808, 03/2019
 
@@ -73,10 +78,20 @@ switch lower(type)
         hgsave(handle,destinationFile)
     case 'pdf'
         save2pdf(handle, destinationFile, dpi)
-        system(['pdfcrop ', destinationFile, ' ', destinationFile])
+        [status,~] = system(['pdfcrop ', destinationFile, ' ', destinationFile]);
+        if status ~= 0
+            warning(['fFigCapture: unable to remove PDF white margins. ',...
+                     'Check if ''pdfcrop'' is installed and in PATH. ',...
+                     'See ''Dependencies'' in ''README.md.'''])
+        end
     case 'png'
         save2png(handle, destinationFile, dpi)
-        system(['convert ', destinationFile, ' -trim ', destinationFile]);
+        [status,~] = system(['convert ', destinationFile, ' -trim ', destinationFile]);
+        if status ~= 0
+            warning(['fFigCapture: unable to remove PNG white margins. ',...
+                     'Check if ''imagemagick/convert'' is installed and in PATH. ',...
+                     'See ''Dependencies'' in ''README.md.'''])
+        end
     case 'try'
         % trial run only, no output will be created.
     otherwise

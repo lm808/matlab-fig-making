@@ -1,6 +1,6 @@
 function rule(loc,type,varargin)
 
-% [] = rule(loc, type, [...any other usual line-format commands...])
+% [] = rule(loc, type, ...)
 % -------------------------------------------------------------------------
 % Draws horizontal or vertical lines across a figure.
 % Inputs: 1) loc - location of the line, can be a vector for multiple
@@ -9,6 +9,9 @@ function rule(loc,type,varargin)
 %            be a charactor vector that correpsonds to each element in the 
 %            'loc' vector. If 'loc' is a vector but 'type' is not, then all
 %            lines will plotted in the same way.
+%         3) '...' - extra value-option pairs:
+%            Any options that work with 'plot' will work here. e.g.:
+%            rule(0, 'h', 'r', 'linewdith', 1.5)
 % -------------------------------------------------------------------------
 % lm808, 03/09
 

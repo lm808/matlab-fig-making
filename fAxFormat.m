@@ -1,6 +1,6 @@
 function fAxFormat(h, varargin)
 
-% [] = fAxFormat(h, varargin)
+% [] = fAxFormat(h, ...)
 % -------------------------------------------------------------------------
 % Formats the axes with the desired text interpreter and font sizes.
 % - Adjusts the darkness of the grid lines to make it more suitable for 
@@ -14,11 +14,11 @@ function fAxFormat(h, varargin)
 % - If invoked directly, use ('skip_format_adj', true) with fFigCapture.m 
 %   to skip all axes formatting in the latter.
 % - Mandatory input: h - axes handle
-% - Option-value pairs:
-%   1) 'text_interpreter': 'none', 'tex', 'latex' (default). 
-%   2) 'tick_fontSz': font size of the axis numbers, default 10
-%   3) 'label_fontSz': font size of axis labels, default 11
-%   4) 'title_fontSz': font size of the axis title, default 11
+% - '...' - extra option-value pairs ('option', default) :
+%   ('tex_interpreter', 'Latex') - text interpreter for the figure
+%   ('tick_fontsz', 10) - font size of numbers on the axis
+%   ('label_fontsz', 11) - font size of the axis labels (i.e. xlabel, etc)
+%   ('title_fontsz', 11) - font size of the figure title
 % -------------------------------------------------------------------------
 % lm808, 03/2019
 
