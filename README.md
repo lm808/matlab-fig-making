@@ -1,5 +1,7 @@
 # matlab-fig-making
-MATLAB toolbox to prepare figures for documents and publications.
+A set of MATLAB tools to prepare figures optimised for documents, publications and presentations.
+
+The aim is that the exported figure will require no resizing when used in documents (especially LaTeX). In this way, you have direct control on font sizes and line thickness etc. right when you produce the figure.
 
 Released under MIT License
 
@@ -23,10 +25,7 @@ These should be available on most Linux distributions, if not already installed.
 ## List of functions
 
 `fFigCapture.m`
-- Exports MATLAB figures 'as is', with formatting options for texts.
-	 
-`fAxFormat.m`
-- Formats the axes with the desired text interpreter and font sizes.
+- Exports MATLAB figures 'as is', other than simple formatting options for texts. 
 
 `fFigResize.m`
 - Resizes figures to fit onto a document page.
@@ -34,17 +33,25 @@ These should be available on most Linux distributions, if not already installed.
 `fFigZoom.m`
 - Creates a new figure which is a zoomed-in version of an existing figure.
 
-`fClr.m`
-- Defines a set of colour scheme for plotting and returns their RGB.
-- See 'fig_colorschm.png' for the colours and their names for using the function.
-
 `fAxDownSample.m`
 - Down-samples the axis to reduce the exported file size.
-
-`fFigGetPos.m`
-- Gets the current location and size of the figure, and copies a command to the system clipboard, so that other figures can be easily set to exaclty the same size and location.
 
 `rule.m`
 - Draws horizontal or vertical lines across a figure.
 
+`fClr.m`
+- Defines a set of colour scheme for plotting and returns their RGB.
+- See 'fig_colorschm.png' for the colours and their names for using the function.
+
+`fFigGetPos.m`
+- Gets the current location and size of the figure, and copies a command to the system clipboard, so that other figures can be easily set to exaclty the same size and location.
+
+`fAxFormat.m`
+- Formats the axes with the desired text interpreter and font sizes.
+
 Type `help <function name>` to see further documentation.
+
+## To-do's
+
+* Upload examples for workflow code and output files.
+* Change fFigZoom to copy and then zoom an axes rather than a figure.
