@@ -15,6 +15,7 @@ function []=fFigCapture(handle, destinationFile, varargin)
 %   ('label_fontsz', 11) - font size of the axis labels (i.e. xlabel, etc)
 %   ('title_fontsz', 11) - font size of the figure title
 %   ('skip_format_adj', false) - skip interpreter or font changes
+%   ('sep_legend', false) - export legend in a different file
 % -------------------------------------------------------------------------
 % lm808, 03/2019
 
@@ -25,6 +26,7 @@ tick_fontSz = 10;
 label_fontSz = 11;
 title_fontSz = 11;
 skip_format_adj = false;
+sep_legend = false;
 
 %% parse input
 n = length(varargin);
@@ -42,12 +44,14 @@ for i = 1:2:n-1
             title_fontSz = varargin{i+1};
         case 'skip_format_adj'
             skip_format_adj = varargin{i+1};
+        case  'sep_legend'
+            sep_legend = varargin{i+1};
         otherwise
             error('fFigCapture: Unknown option.')
     end
 end
-type = strsplit(destinationFile, '.');
-type = type{end};
+[~,fileName,fileExt] = fileparts(destinationFile);
+type = fileExt(2:end);
 
 %% set interpreter & font sizes
 if ~skip_format_adj
@@ -72,7 +76,33 @@ if ~skip_format_adj
     end
 end
 
-%% output figure
+%% deal with legend if required
+if sep_legend
+    % find the handle to legend
+    h_lg = findobj(handle, 'type', 'Legend');
+    % find the handle to axes associated with legend (undocumated MATLAB)
+    h_ax = h_lg.Axes;
+    % create new figure and copy over the axis & legend
+    h_fig2 = figure;
+    copyobj([h_lg, h_ax], h_fig2)
+    % renew handles to point towards the copied version
+    h_lg2 = findobj(h_fig2, 'type', 'Legend');
+    h_ax2 = h_lg2.Axes;
+    % freeze the legend
+    h_lg2.AutoUpdate = 'off';
+    % kill all plots & turn off the axes
+    while ~isempty(h_ax2.Children)
+        h_ax2.Children(1).delete
+    end
+    h_ax2.Visible = 'off';
+    % export legend as separate file
+    fFigCapture(h_fig2, [fileName, '_legend', fileExt])
+    close(h_fig2)
+    % turn off legend on the original figure
+    axes(h_ax)
+    legend off
+end
+    
 switch lower(type)
     case 'fig'
         hgsave(handle,destinationFile)
@@ -98,6 +128,10 @@ switch lower(type)
         disp('Unsupported file format, saving as MATLAB fig file.')
         fFigCapture(handle,[destinationFile,'.fig'])
 end
+
+
+    
+
 
 %% PNG export
 function save2png(handle, destinationFile, dpi)
