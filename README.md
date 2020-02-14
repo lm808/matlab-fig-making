@@ -5,10 +5,10 @@ The aim is that the exported figure will require no resizing when used in docume
 
 Released under MIT License. All usage must incorporate appropriate citation as listed below.
 
-Copyright (c) 2019 lm808
+Copyright (c) 2018-2020 lm808. All rights reserved.
 
 ## Cite as
-L. Ma, matlab-fig-making (2019), open-source repository, https://github.com/lm808/matlab-fig-making/
+L. Ma, matlab-fig-making (2020), open-source repository, https://github.com/lm808/matlab-fig-making/
 
 ## Usage
 
