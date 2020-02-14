@@ -3,11 +3,11 @@ A set of MATLAB tools to prepare figures optimised for documents, publications a
 
 The aim is that the exported figure will require no resizing when used in documents (especially LaTeX). In this way, you have direct control on font sizes and line thickness etc. right when you produce the figure.
 
-Released under MIT License
+Released under MIT License. All usage must incorporate appropriate citation as listed below.
 
 Copyright (c) 2019 lm808
 
-## Citation
+## Cite as
 L. Ma, matlab-fig-making (2019), open-source repository, https://github.com/lm808/matlab-fig-making/
 
 ## Usage
