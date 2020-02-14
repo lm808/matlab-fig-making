@@ -1,4 +1,4 @@
-function [clr] = fClr(i,~)
+function [clr] = fClr(i)
 
 % [clr] = fClr(i)
 % -------------------------------------------------------------------------
@@ -21,11 +21,18 @@ function [clr] = fClr(i,~)
 % -------------------------------------------------------------------------
 % lm808, 03/2019
 
+if nargin < 1
+    showColours()
+    return
+end
+
 if ischar(i)
     i = lower(i);
 end
 
 switch i
+    case {0,'w','white'}
+        clr = [255 255 255];
     case {1,'b','blue'}
         clr = [0 114 189];%[24 142 255];%
     case {2,'r','red'}
@@ -46,33 +53,34 @@ switch i
         clr = [247 23 240];
     case {10,'l','lime'}
         clr = [200 206 23];
-    case {11,'lb','lightblue','sky'}
+    case {11,'lb','lightblue','lblue','sky'}
         clr = [153 215 255];
-    case {12,'lr','lightred','salmon'}
+    case {12,'lr','lightred','lred','salmon'}
         clr = [255 128 128];
-    case {13,'lk','lightblack','grey'}
+    case {13,'lk','lightblack','lblack','grey'}
         clr = [128 128 128];
-    case {14,'lg','lightgreen','spring'}
+    case {14,'lg','lightgreen','lgreen','spring'}
         clr = [129 246 101];
-    case {15,'ly','lightyellow','sand'}
+    case {15,'ly','lightyellow','lyellow','sand'}
         clr = [255 226 128];
-    case {16,'lv','lightviolet','plum'}
+    case {16,'lv','lightviolet','lviolet','plum'}
         clr = [199 100 245];
-    case {17,'lo','lightorange','sun'}
+    case {17,'lo','lightorange','lorange','sun'}
         clr = [255 164 76];
-    case {18,'lt','lightteal','aqua'}
+    case {18,'lt','lightteal','lteal','aqua'}
         clr = [128 255 236];
-    case {19,'lm','lightmagenta','orchid'}
+    case {19,'lm','lightmagenta','lmagenta','orchid'}
         clr = [251 151 248];
-    case {20,'ll','lightlime','wasabi'}
+    case {20,'ll','lightlime','llime','wasabi'}
         clr = [221 238 106];
     otherwise
         error('Unknown colour.')
 end
 
 clr = clr/255;
+end
 
-if nargin > 1
+function showColours()
     figure
     hold on
     for i=1:10
@@ -90,6 +98,7 @@ if nargin > 1
                           '9/magenta/m','19/orchid/lightmagenta/lm','10/lime/l','20/wasabi/lightlime/ll'})
     hold off
 end
+
     
 % clr{1} = [255 0 0]/255;
 % clr{2} = [24 142 255]/255;

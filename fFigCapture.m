@@ -96,7 +96,7 @@ if sep_legend
     end
     h_ax2.Visible = 'off';
     % export legend as separate file
-    fFigCapture(h_fig2, [fileName, '_legend', fileExt])
+    fFigCapture(h_fig2,  strrep(destinationFile, fileExt, ['_legend', fileExt]))
     close(h_fig2)
     % turn off legend on the original figure
     axes(h_ax)
@@ -128,10 +128,6 @@ switch lower(type)
         disp('Unsupported file format, saving as MATLAB fig file.')
         fFigCapture(handle,[destinationFile,'.fig'])
 end
-
-
-    
-
 
 %% PNG export
 function save2png(handle, destinationFile, dpi)
