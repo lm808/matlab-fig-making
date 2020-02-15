@@ -7,7 +7,7 @@ Released under MIT License. All usage must incorporate appropriate citation as l
 
 Copyright (c) 2018-2020 lm808. All rights reserved.
 
-## Cite as
+# Cite as
 L. Ma, matlab-fig-making (2020), open-source repository, https://github.com/lm808/matlab-fig-making/
 
 ## Usage
