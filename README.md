@@ -3,7 +3,9 @@ A set of MATLAB tools to prepare figures optimised for documents, publications a
 
 The aim is that the exported figure will require no resizing when used in documents (especially LaTeX). In this way, you have direct control on font sizes and line thickness etc. right when you produce the figure.
 
-Released under MIT License. All usage must incorporate appropriate citation as listed below.
+Released under the MIT License (included). In addition, the author reserves the rights to later publications of the project under a different licence. All usage must incorporate appropriate citation as listed below.
+
+Disclaimer: the codes are provided 'as-is' without warranty and is used solely at the risk of the end-user.
 
 Copyright (c) 2018-2020 lm808. All rights reserved.
 
