@@ -19,6 +19,8 @@ function []=fFigCapture(handle, destinationFile, varargin)
 % -------------------------------------------------------------------------
 % lm808, 03/2019
 
+drawnow % flush any MATLAB figures that have not been displayed yet.
+
 %% defualts
 dpi = 300;
 text_interpreter = 'Latex';
@@ -91,9 +93,12 @@ if sep_legend
     % freeze the legend
     h_lg2.AutoUpdate = 'off';
     % kill all plots & turn off the axes
-    while ~isempty(h_ax2.Children)
-        h_ax2.Children(1).delete
+    for i = 1:length(h_ax2.Children)
+        h_ax2.Children(i).XData = NaN;
     end
+    % while ~isempty(h_ax2.Children)
+        % h_ax2.Children(1).delete
+    % end
     h_ax2.Visible = 'off';
     % export legend as separate file
     fFigCapture(h_fig2,  strrep(destinationFile, fileExt, ['_legend', fileExt]))
@@ -118,9 +123,10 @@ switch lower(type)
         save2png(handle, destinationFile, dpi)
         [status,~] = system(['convert ', destinationFile, ' -trim ', destinationFile]);
         if status ~= 0
-            warning(['fFigCapture: unable to remove PNG white margins. ',...
-                     'Check if ''imagemagick/convert'' is installed and in PATH. ',...
-                     'See ''Dependencies'' in ''README.md.'''])
+            % warning(['fFigCapture: unable to remove PNG white margins. ',...
+%                      'Check if ''imagemagick/convert'' is installed and in PATH. ',...
+%                      'See ''Dependencies'' in ''README.md.'''])
+            cropPNG(destinationFile);
         end
     case 'try'
         % trial run only, no output will be created.
@@ -141,6 +147,24 @@ print(handle,destinationFile,'-dpng',sprintf('-r%d',dpi))
 
 % Restore the previous settings
 set(handle,'PaperPosition',prePaperPosition);
+
+%% PNG Crop
+function cropPNG(file)
+
+thr = uint8(2^8-1);
+img = imread(file);
+mask = img(:,:,1)<thr & img(:,:,2)<thr & img(:,:,3)<thr;
+% first row and last row that are not white
+mcol = any(mask,2);
+i = find(mcol, 1, 'first');
+j = find(mcol, 1, 'last' );
+img = img( i:j , :, :);
+% first column and last column that are not white
+mrow = any(mask,1);
+i = find(mrow, 1, 'first');
+j = find(mrow, 1, 'last' );
+img = img( :, i:j, :);
+imwrite(img, file)
 
 %% PDF export
 function save2pdf(handle, pdfFileName, dpi)
